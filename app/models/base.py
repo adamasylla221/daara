@@ -1,6 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from app.extension import db
+
+
+def _maintenant():
+    """Horodatage UTC timezone-aware (remplace l'obsolète datetime.utcnow())."""
+    return datetime.now(timezone.utc)
 
 
 class BaseModel(db.Model):
@@ -10,10 +15,10 @@ class BaseModel(db.Model):
     """
     __abstract__ = True
 
-    cree_le = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    cree_le = db.Column(db.DateTime(timezone=True), default=_maintenant, nullable=False)
     maj_le = db.Column(
-        db.DateTime,
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow,
+        db.DateTime(timezone=True),
+        default=_maintenant,
+        onupdate=_maintenant,
         nullable=False,
     )
