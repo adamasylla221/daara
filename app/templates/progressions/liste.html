@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block titre %}Progressions{% endblock %}
+{% block contenu %}
+<div class="toolbar">
+    <h1>Progressions</h1>
+    <a class="btn" href="{{ url_for('progressions.creer') }}">+ Ajouter</a>
+</div>
+
+<form method="get" style="margin-bottom:1rem;">
+    <select name="talibe">
+        <option value="">Tous les talibés</option>
+        {% for t in talibes %}
+            <option value="{{ t.matricule }}" {% if t.matricule == talibe_matricule %}selected{% endif %}>
+                {{ t.prenom }} {{ t.nom }}
+            </option>
+        {% endfor %}
+    </select>
+    <button class="btn secondary" type="submit">Filtrer</button>
+    <a class="btn secondary" href="{{ url_for('progressions.lister') }}">Réinitialiser</a>
+    <a class="btn" href="{{ url_for('progressions.exporter', talibe=talibe_matricule) }}">Exporter CSV</a>
+</form>
+
+<table>
+    <thead>
+        <tr><th>Sourate</th><th>Versets</th><th>Date</th><th>Talibé</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+    {% for p in progressions %}
+        <tr>
+            <td>{{ p.sourate }}</td>
+            <td>{{ p.nombre_versets }}</td>
+            <td>{{ p.date_evaluation or "" }}</td>
+            <td>{{ p.talibe_matricule }}</td>
+            <td>
+                <a href="{{ url_for('progressions.modifier', progression_id=p.id) }}">Modifier</a>
+                &nbsp;
+                <form class="inline" method="post"
+                      action="{{ url_for('progressions.supprimer', progression_id=p.id) }}">
+                    <button class="btn danger" onclick="return confirm('Supprimer cette progression ?')">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="5">Aucune progression trouvée.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

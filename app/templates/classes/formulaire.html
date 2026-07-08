@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block titre %}{{ 'Modifier' if classe else 'Ajouter' }} une classe{% endblock %}
+{% block contenu %}
+<h1>{{ 'Modifier' if classe else 'Ajouter' }} une classe</h1>
+
+<form method="post">
+    {{ form.csrf_token }}
+    <p>
+        {{ form.code.label }}<br>
+        {{ form.code(readonly=classe is not none) }}
+        {% for e in form.code.errors %}<div class="flash danger">{{ e }}</div>{% endfor %}
+    </p>
+    <p>
+        {{ form.libelle.label }}<br>
+        {{ form.libelle() }}
+        {% for e in form.libelle.errors %}<div class="flash danger">{{ e }}</div>{% endfor %}
+    </p>
+    <p>
+        {{ form.niveau.label }}<br>
+        {{ form.niveau() }}
+    </p>
+    <p>
+        {{ form.maitre_matricule.label }}<br>
+        {{ form.maitre_matricule() }}
+        {% for e in form.maitre_matricule.errors %}<div class="flash danger">{{ e }}</div>{% endfor %}
+    </p>
+    {{ form.submit(class="btn") }}
+    <a class="btn secondary" href="{{ url_for('classes.lister') }}">Annuler</a>
+</form>
+{% endblock %}

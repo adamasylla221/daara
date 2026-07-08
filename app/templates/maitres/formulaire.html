@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block titre %}{{ 'Modifier' if maitre else 'Ajouter' }} un maître{% endblock %}
+{% block contenu %}
+<h1>{{ 'Modifier' if maitre else 'Ajouter' }} un maître</h1>
+
+<form method="post">
+    {{ form.csrf_token }}
+    <p>
+        {{ form.matricule.label }}<br>
+        {{ form.matricule(readonly=maitre is not none) }}
+        {% for e in form.matricule.errors %}<div class="flash danger">{{ e }}</div>{% endfor %}
+    </p>
+    <p>
+        {{ form.prenom.label }}<br>
+        {{ form.prenom() }}
+        {% for e in form.prenom.errors %}<div class="flash danger">{{ e }}</div>{% endfor %}
+    </p>
+    <p>
+        {{ form.nom.label }}<br>
+        {{ form.nom() }}
+        {% for e in form.nom.errors %}<div class="flash danger">{{ e }}</div>{% endfor %}
+    </p>
+    <p>
+        {{ form.telephone.label }}<br>
+        {{ form.telephone() }}
+    </p>
+    {{ form.submit(class="btn") }}
+    <a class="btn secondary" href="{{ url_for('maitres.lister') }}">Annuler</a>
+</form>
+{% endblock %}

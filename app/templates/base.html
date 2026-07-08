@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block titre %}Gestion Daara{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f5f5f5; color: #222; }
+        nav { background: #0d0d0d; padding: 1rem 2rem; }
+        nav a { color: #f5f0e6; text-decoration: none; margin-right: 1.5rem; font-weight: bold; }
+        nav a:hover { color: #c9a24b; }
+        main { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+        .flash { padding: .75rem 1rem; border-radius: 4px; margin-bottom: 1rem; }
+        .flash.success { background: #d4edda; color: #155724; }
+        .flash.danger { background: #f8d7da; color: #721c24; }
+        table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 1rem; }
+        th, td { padding: .6rem .8rem; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background: #eee; }
+        form.inline { display: inline; }
+        .btn { display: inline-block; padding: .4rem .8rem; border-radius: 4px; text-decoration: none;
+               background: #0d0d0d; color: #fff; border: none; cursor: pointer; font-size: .9rem; }
+        .btn.secondary { background: #888; }
+        .btn.danger { background: #b23b3b; }
+        .toolbar { display: flex; justify-content: space-between; margin-bottom: 1rem; align-items: center; }
+        input[type=text], select { padding: .4rem; border: 1px solid #ccc; border-radius: 4px; }
+        footer { text-align: center; padding: 1rem; color: #777; font-size: .85rem; }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="{{ url_for('main.accueil') }}">Daara</a>
+    <a href="{{ url_for('maitres.lister') }}">Maîtres</a>
+    <a href="{{ url_for('classes.lister') }}">Classes</a>
+    <a href="{{ url_for('talibes.lister') }}">Talibés</a>
+    <a href="{{ url_for('progressions.lister') }}">Progressions</a>
+</nav>
+<main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for categorie, message in messages %}
+            <div class="flash {{ categorie }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    {% block contenu %}{% endblock %}
+</main>
+<footer>Gestion d'une Daara — Projet L2 Génie Logiciel, ISI</footer>
+</body>
+</html>

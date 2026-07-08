@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block titre %}{{ 'Modifier' if talibe else 'Ajouter' }} un talibé{% endblock %}
+{% block contenu %}
+<h1>{{ 'Modifier' if talibe else 'Ajouter' }} un talibé</h1>
+
+<form method="post">
+    {{ form.csrf_token }}
+    <p>
+        {{ form.matricule.label }}<br>
+        {{ form.matricule(readonly=talibe is not none) }}
+        {% for e in form.matricule.errors %}<div class="flash danger">{{ e }}</div>{% endfor %}
+    </p>
+    <p>{{ form.prenom.label }}<br>{{ form.prenom() }}</p>
+    <p>{{ form.nom.label }}<br>{{ form.nom() }}</p>
+    <p>{{ form.date_naissance.label }}<br>{{ form.date_naissance() }}</p>
+    <p>{{ form.nom_tuteur.label }}<br>{{ form.nom_tuteur() }}</p>
+    <p>{{ form.telephone_tuteur.label }}<br>{{ form.telephone_tuteur() }}</p>
+    <p>
+        {{ form.classe_code.label }}<br>
+        {{ form.classe_code() }}
+        {% for e in form.classe_code.errors %}<div class="flash danger">{{ e }}</div>{% endfor %}
+    </p>
+    {{ form.submit(class="btn") }}
+    <a class="btn secondary" href="{{ url_for('talibes.lister') }}">Annuler</a>
+</form>
+{% endblock %}

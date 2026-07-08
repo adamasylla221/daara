@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block titre %}{{ 'Modifier' if progression else 'Ajouter' }} une progression{% endblock %}
+{% block contenu %}
+<h1>{{ 'Modifier' if progression else 'Ajouter' }} une progression</h1>
+
+<form method="post">
+    {{ form.csrf_token }}
+    <p>{{ form.sourate.label }}<br>{{ form.sourate() }}</p>
+    <p>{{ form.nombre_versets.label }}<br>{{ form.nombre_versets() }}</p>
+    <p>{{ form.date_evaluation.label }}<br>{{ form.date_evaluation() }}</p>
+    <p>{{ form.observations.label }}<br>{{ form.observations() }}</p>
+    <p>
+        {{ form.talibe_matricule.label }}<br>
+        {{ form.talibe_matricule() }}
+        {% for e in form.talibe_matricule.errors %}<div class="flash danger">{{ e }}</div>{% endfor %}
+    </p>
+    {{ form.submit(class="btn") }}
+    <a class="btn secondary" href="{{ url_for('progressions.lister') }}">Annuler</a>
+</form>
+{% endblock %}
