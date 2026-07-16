@@ -36,6 +36,7 @@
                 &nbsp;
                 <form class="inline" method="post"
                       action="{{ url_for('progressions.supprimer', progression_id=p.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button class="btn danger" onclick="return confirm('Supprimer cette progression ?')">Supprimer</button>
                 </form>
             </td>

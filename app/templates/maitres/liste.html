@@ -29,6 +29,7 @@
                 &nbsp;
                 <form class="inline" method="post"
                       action="{{ url_for('maitres.supprimer', matricule=m.matricule) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button class="btn danger" onclick="return confirm('Supprimer ce maître ?')">Supprimer</button>
                 </form>
             </td>
