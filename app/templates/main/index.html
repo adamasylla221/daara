@@ -3,4 +3,39 @@
 {% block contenu %}
 <h1>Gestion d'une Daara</h1>
 <p>Utilisez le menu ci-dessus pour gérer les maîtres, les classes, les talibés et leurs progressions.</p>
+
+<div class="toolbar">
+    <h2>Aperçu</h2>
+</div>
+<table>
+    <thead>
+        <tr><th>Maîtres</th><th>Classes</th><th>Talibés</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ nb_maitres }}</td>
+            <td>{{ nb_classes }}</td>
+            <td>{{ nb_talibes }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Dernières progressions</h2>
+<table>
+    <thead>
+        <tr><th>Talibé</th><th>Sourate</th><th>Nombre de versets</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+    {% for p in progressions %}
+        <tr>
+            <td>{{ p.talibe.prenom }} {{ p.talibe.nom }}</td>
+            <td>{{ p.sourate }}</td>
+            <td>{{ p.nombre_versets }}</td>
+            <td>{{ p.date_evaluation or "" }}</td>
+        </tr>
+    {% else %}
+        <tr><td colspan="4">Aucune progression enregistrée.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
